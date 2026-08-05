@@ -4,11 +4,20 @@ import routes from './routes.js';
 
 const app = express();
 
-app.engine('hbs', engine({extname: 'hbs'}));
+app.engine('hbs', engine({
+    extname: 'hbs',
+    helpers: {
+        setTitle(title) {
+            this.pageTitle = title;
+        }
+    },
+}));
 app.set('view engine', 'hbs');
 app.set('views', './src/views');
 
 app.use(express.static('./src/public'));
+
+app.use(express.urlencoded());
 
 app.use(routes);
 

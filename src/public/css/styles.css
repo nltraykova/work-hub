@@ -756,3 +756,182 @@ select {
         gap: 28px;
     }
 }
+
+/* ========================================
+   REGISTER PAGE
+======================================== */
+
+main.register-page {
+    min-height: 720px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 64px 20px;
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(91, 91, 214, 0.12),
+            transparent 32%
+        ),
+        #f8fafc;
+}
+
+.register-page .register-card {
+    width: 100%;
+    max-width: 500px;
+    padding: 40px;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 20px;
+    box-shadow: 0 20px 55px rgba(15, 23, 42, 0.12);
+}
+
+.register-page .register-header {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.register-page .register-header .section-label {
+    margin-bottom: 10px;
+    color: #5b5bd6;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.register-page .register-header h1 {
+    margin: 0;
+    color: #111827;
+    font-size: 32px;
+    line-height: 1.2;
+}
+
+.register-page .register-header p:last-child {
+    margin-top: 10px;
+    color: #6b7280;
+    font-size: 15px;
+}
+
+.register-page .register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.register-page .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.register-page .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.register-page .form-group label {
+    color: #1f2937;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.register-page .form-group input {
+    width: 100%;
+    height: 48px;
+    padding: 0 14px;
+    color: #111827;
+    background-color: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    outline: none;
+    font-size: 15px;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.register-page .form-group input::placeholder {
+    color: #9ca3af;
+}
+
+.register-page .form-group input:hover {
+    border-color: #9ca3af;
+}
+
+.register-page .form-group input:focus {
+    border-color: #5b5bd6;
+    box-shadow: 0 0 0 4px rgba(91, 91, 214, 0.12);
+}
+
+.register-page .field-hint {
+    margin: 0;
+    color: #6b7280;
+    font-size: 12px;
+}
+
+.register-page .field-error {
+    margin: 0;
+    color: #dc2626;
+    font-size: 13px;
+}
+
+.register-page .alert {
+    margin-bottom: 20px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.register-page .alert-error {
+    color: #991b1b;
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+}
+
+.register-page .register-submit {
+    width: 100%;
+    min-height: 50px;
+    margin-top: 4px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.register-page .register-footer {
+    margin-top: 24px;
+    color: #6b7280;
+    text-align: center;
+    font-size: 14px;
+}
+
+.register-page .register-footer a {
+    color: #5b5bd6;
+    font-weight: 700;
+}
+
+.register-page .register-footer a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+    main.register-page {
+        min-height: auto;
+        padding: 40px 14px;
+    }
+
+    .register-page .register-card {
+        padding: 30px 20px;
+        border-radius: 16px;
+    }
+
+    .register-page .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .register-page .register-header h1 {
+        font-size: 28px;
+    }
+}
