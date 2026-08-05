@@ -16,9 +16,11 @@ authController.post('/register', async (req, res) => {
             formData: {
             firstName: req.body.firstName,
             lastName: req.body.lastName,
-            email: req.body.lastName
+            email: req.body.email
         }});
     };
+
+    res.cookie('auth', result.data.token, { httpOnly: true });
 
     res.redirect('/');
 });

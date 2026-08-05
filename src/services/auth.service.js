@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import userRepository from "../repositories/user.repository.js";
 import userSchema from "../schemas/auth.schema.js";
+import { generateAuthToken } from '../utils/token.utils.js';
 
 async function register(userData) {
     const validationResult = userSchema.safeParse(userData);
@@ -36,9 +37,14 @@ async function register(userData) {
 
     const { password, ...safeUser } = createdUser;
 
+    const token = generateAuthToken(safeUser);
+
     return {
         success: true,
-        data: safeUser
+        data: {
+            safeUser,
+            token,
+        },
     };
 }
 
