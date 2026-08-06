@@ -1,6 +1,6 @@
 import * as z from 'zod';
 
-const userSchema = z.object({
+const registerSchema = z.object({
     firstName: z.string()
         .trim()
         .min(2, { error: 'First name must be at least 2 characters long'})
@@ -9,7 +9,7 @@ const userSchema = z.object({
         .trim()
         .min(2, { error: 'Last name must be at least 2 characters long'})
         .max(50, { error: 'Last name must not exceed 50 characters' }),
-    email: z.email( { error: 'Invalid email address' })
+    email: z.email({ error: 'Invalid email address' })
         .max(254, { error: 'Email must not exceed 254 characters' })
         .trim()
         .toLowerCase(),
@@ -24,4 +24,15 @@ const userSchema = z.object({
     path: ['rePassword']
 });
 
-export default userSchema;
+const loginSchema = z.object({
+    email: z.email({ error: 'Invalid email address' })
+        .trim()
+        .toLowerCase(),
+    password: z.string()
+        .min(1, { error: 'Pasword is required'}),
+});
+
+export {
+    registerSchema,
+    loginSchema
+}
