@@ -1,6 +1,33 @@
 import projectRepository from "../repositories/project.repository.js";
 import createProjectSchema from "../schemas/project.schema.js";
 
+async function getMy(userId) {
+    const projects = await projectRepository.getMy(userId);
+
+    const projectsWithRole = projects.map(project => {
+        const currentUserRole = project.members[0].role;
+
+        return {
+            ...project,
+            currentUserRole
+        };
+    });
+
+    return {
+        projects: projectsWithRole,
+        projectsCount: projects.length,
+        activeProjectsCount: projects.filter(
+            project => project.status === 'ACTIVE'
+        ).length,
+        completedProjectsCount: projects.filter(
+            project => project.status === 'COMPLETED'
+        ).length,
+        archivedProjectsCount: projects.filter(
+            project => project.status === 'ARCHIVED'
+        ).length,
+    };
+}
+
 async function create(projectData, ownerId) {
     const validationResult = createProjectSchema.safeParse(projectData);
 
@@ -23,6 +50,7 @@ async function create(projectData, ownerId) {
 };
 
 const projectService = {
+    getMy,
     create,
 };
 

@@ -4,6 +4,14 @@ import projectService from "../services/project.service.js";
 
 const projectController = Router();
 
+projectController.get('/my-projects', isAuth, async (req, res) => {
+    const userId = req.user.id;
+
+    const data = await projectService.getMy(userId);
+
+    res.render('project/myProjects', { data });
+});
+
 projectController.get('/create', isAuth, (req, res) => {
     res.render('project/create');
 });
@@ -24,7 +32,7 @@ projectController.post('/create', isAuth, async (req, res) => {
         });
     };
 
-    res.redirect('/');
+    res.redirect('/projects/my-projects');
 });
 
 export default projectController;

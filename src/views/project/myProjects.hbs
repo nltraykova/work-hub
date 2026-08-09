@@ -1,0 +1,130 @@
+{{setTitle 'My Projects | WorkHub'}}
+
+<main class="projects-page">
+    <section class="projects-section">
+        <div class="container">
+            <div class="projects-header">
+                <div>
+                    <p class="section-label">Workspace</p>
+                    <h1>My Projects</h1>
+                    <p class="projects-subtitle">
+                        View and manage the projects you own or participate in.
+                    </p>
+                </div>
+
+                <a href="/projects/create" class="button button-primary">
+                    + New Project
+                </a>
+            </div>
+
+            <div class="projects-summary">
+                <article class="project-summary-card">
+                    <span>All Projects</span>
+                    <strong>{{data.projectsCount}}</strong>
+                </article>
+
+                <article class="project-summary-card">
+                    <span>Active</span>
+                    <strong>{{data.activeProjectsCount}}</strong>
+                </article>
+
+                <article class="project-summary-card">
+                    <span>Completed</span>
+                    <strong>{{data.completedProjectsCount}}</strong>
+                </article>
+
+                <article class="project-summary-card">
+                    <span>Archived</span>
+                    <strong>{{data.archivedProjectsCount}}</strong>
+                </article>
+            </div>
+
+            <div class="projects-toolbar">
+                <div class="projects-filter">
+                    <button type="button" class="filter-button active">
+                        All
+                    </button>
+
+                    <button type="button" class="filter-button">
+                        Active
+                    </button>
+
+                    <button type="button" class="filter-button">
+                        Completed
+                    </button>
+
+                    <button type="button" class="filter-button">
+                        Archived
+                    </button>
+                </div>
+            </div>
+
+            <div class="projects-grid">
+                {{#each data.projects}}
+                <article class="project-card">
+                    <div class="project-card-header">
+                        <div>
+                            <span class="project-role">{{currentUserRole}}</span>
+                            <h2>{{name}}</h2>
+                        </div>
+                        <span class="project-status project-status-active">{{status}}</span>
+                    </div>
+
+                    <p class="project-description">{{description}}</p>
+
+                    <div class="project-progress">
+                        <div class="project-progress-header">
+                            <span>Progress</span>
+                            <strong>68%</strong>
+                        </div>
+
+                        <div class="project-progress-bar">
+                            <div class="project-progress-value progress-68"></div>
+                        </div>
+                    </div>
+
+                    <div class="project-stats">
+                        <div>
+                            <strong>24</strong>
+                            <span>Tasks</span>
+                        </div>
+
+                        <div>
+                            <strong>16</strong>
+                            <span>Completed</span>
+                        </div>
+
+                        <div>
+                            <strong>4</strong>
+                            <span>Members</span>
+                        </div>
+                    </div>
+
+                    <div class="project-card-footer">
+                        <span>Updated today</span>
+
+                        <a href="/projects/example-1" class="project-open-link">
+                            Open Project →
+                        </a>
+                    </div>
+                </article>
+                {{else}}
+                <div class="projects-empty-state">
+                    <div class="empty-state-icon">
+                        +
+                    </div>
+
+                    <h2>No projects yet</h2>
+
+                    <p>
+                        Create your first project and start organizing tasks,
+                        members, and progress in one place.
+                    </p>
+
+                    <a href="/projects/create" class="button button-primary">Create Your First Project</a>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </section>
+</main>
