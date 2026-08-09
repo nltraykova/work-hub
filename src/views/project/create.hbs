@@ -1,0 +1,60 @@
+{{setTitle 'Create Project | WorkHub'}}
+
+<main class="project-create-page">
+    <section class="project-create-card">
+        <div class="project-create-header">
+            <p class="section-label">New project</p>
+
+            <h1>Create a project</h1>
+
+            <p>
+                Add the basic information for your new project.
+            </p>
+        </div>
+
+        {{#if error}}
+        <div class="alert alert-error" role="alert">
+            {{error}}
+        </div>
+        {{/if}}
+
+        <form method="POST" class="project-create-form">
+            <div class="form-group">
+                <label for="name">Project name</label>
+
+                <input type="text" id="name" name="name" value="{{formData.name}}" placeholder="Website Redesign"
+                    maxlength="80">
+
+                {{#if errors.name}}
+                <p class="field-error">{{errors.name}}</p>
+                {{/if}}
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+
+                <textarea id="description" name="description" placeholder="Describe the goal of the project..."
+                    maxlength="500" rows="6">{{formData.description}}</textarea>
+
+                <div class="field-meta">
+                    <span>Optional</span>
+                    <span>Maximum 500 characters</span>
+                </div>
+
+                {{#if errors.description}}
+                <p class="field-error">{{errors.description}}</p>
+                {{/if}}
+            </div>
+
+            <div class="project-create-actions">
+                <a href="/" class="button button-secondary">
+                    Cancel
+                </a>
+
+                <button type="submit" class="button button-primary create-project-submit">
+                    Create Project
+                </button>
+            </div>
+        </form>
+    </section>
+</main>

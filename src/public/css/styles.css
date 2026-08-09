@@ -1132,3 +1132,189 @@ main.login-page {
         font-size: 28px;
     }
 }
+
+/* ========================================
+   CREATE PROJECT PAGE
+======================================== */
+
+main.project-create-page {
+    min-height: calc(100vh - 76px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 64px 20px;
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(91, 91, 214, 0.1),
+            transparent 32%
+        ),
+        #f8fafc;
+}
+
+.project-create-page .project-create-card {
+    width: 100%;
+    max-width: 620px;
+    padding: 40px;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 20px;
+    box-shadow: 0 20px 55px rgba(15, 23, 42, 0.1);
+}
+
+.project-create-page .project-create-header {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.project-create-page .project-create-header .section-label {
+    margin-bottom: 10px;
+    color: #5b5bd6;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.project-create-page .project-create-header h1 {
+    margin: 0;
+    color: #111827;
+    font-size: 32px;
+    line-height: 1.2;
+}
+
+.project-create-page .project-create-header p:last-child {
+    margin-top: 10px;
+    color: #6b7280;
+    font-size: 15px;
+}
+
+.project-create-page .project-create-form {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.project-create-page .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.project-create-page .form-group label {
+    color: #1f2937;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.project-create-page .form-group input,
+.project-create-page .form-group textarea {
+    width: 100%;
+    padding: 0 14px;
+    color: #111827;
+    background-color: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    outline: none;
+    font-size: 15px;
+    font-family: inherit;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.project-create-page .form-group input {
+    height: 48px;
+}
+
+.project-create-page .form-group textarea {
+    min-height: 140px;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    line-height: 1.5;
+    resize: vertical;
+}
+
+.project-create-page .form-group input::placeholder,
+.project-create-page .form-group textarea::placeholder {
+    color: #9ca3af;
+}
+
+.project-create-page .form-group input:hover,
+.project-create-page .form-group textarea:hover {
+    border-color: #9ca3af;
+}
+
+.project-create-page .form-group input:focus,
+.project-create-page .form-group textarea:focus {
+    border-color: #5b5bd6;
+    box-shadow: 0 0 0 4px rgba(91, 91, 214, 0.12);
+}
+
+.project-create-page .field-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    color: #9ca3af;
+    font-size: 12px;
+}
+
+.project-create-page .field-error {
+    margin: 0;
+    color: #dc2626;
+    font-size: 13px;
+}
+
+.project-create-page .alert {
+    margin-bottom: 20px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.project-create-page .alert-error {
+    color: #991b1b;
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+}
+
+.project-create-page .project-create-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 4px;
+}
+
+.project-create-page .create-project-submit {
+    border: none;
+    cursor: pointer;
+}
+
+@media (max-width: 600px) {
+    main.project-create-page {
+        min-height: auto;
+        padding: 40px 14px;
+    }
+
+    .project-create-page .project-create-card {
+        padding: 30px 20px;
+        border-radius: 16px;
+    }
+
+    .project-create-page .project-create-header h1 {
+        font-size: 28px;
+    }
+
+    .project-create-page .project-create-actions {
+        flex-direction: column-reverse;
+    }
+
+    .project-create-page .project-create-actions .button {
+        width: 100%;
+    }
+
+    .project-create-page .field-meta {
+        flex-direction: column;
+        gap: 2px;
+    }
+}
