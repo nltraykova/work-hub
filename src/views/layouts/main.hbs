@@ -34,15 +34,12 @@
             </nav>
 
             <div class="header-actions">
-                <a href="/auth/login" class="button button-secondary">
-                    Log In
-                </a>
-
-                <a href="/auth/register" class="button button-primary">
-                    Get Started
-                </a>
-
+                {{#if user}}
                 <a href="/auth/logout" class="button button-secondary">Log Out</a>
+                {{else}}
+                <a href="/auth/register" class="button button-primary">Get Started</a>
+                <a href="/auth/login" class="button button-secondary">Log In</a>
+                {{/if}}
             </div>
         </div>
     </header>
