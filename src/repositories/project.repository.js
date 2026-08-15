@@ -21,6 +21,25 @@ async function getMy(userId) {
     return myProjects;
 }
 
+async function getById(projectId) {
+    const project = await prisma.project.findUnique({
+        where: {
+            id: projectId,
+        },
+        include: {
+            members: {
+                include: {
+                    user: true,
+                },
+            },
+            tasks: true,
+            owner: true,
+        },
+    });
+
+    return project;
+}
+
 async function create(data, ownerId) {
     const newProject = await prisma.project.create({
         data: {
@@ -41,6 +60,7 @@ async function create(data, ownerId) {
 
 const projectRepository = {
     getMy,
+    getById,
     create,
 };
 

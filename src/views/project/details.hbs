@@ -1,0 +1,260 @@
+{{setTitle 'Project Details | WorkHub'}}
+
+<main class="project-details-page">
+    <section class="project-details-section">
+        <div class="container">
+
+            <div class="project-details-topbar">
+                <a href="/projects/my-projects" class="back-link">
+                    ← Back to My Projects
+                </a>
+
+                <div class="project-details-actions">
+                    <a href="/projects/{{project.id}}/edit" class="button button-secondary">
+                        Edit Project
+                    </a>
+
+                    <a href="/projects/example/tasks/create" class="button button-primary">
+                        + New Task
+                    </a>
+                </div>
+            </div>
+
+            <div class="project-details-header">
+                <div class="project-title-area">
+                    <div class="project-title-meta">
+                        <span class="project-role-badge">{{data.currentMember.role}}</span>
+                        <span class="project-status project-status-active">{{data.status}}</span>
+                    </div>
+                    <h1>{{data.name}}</h1>
+                    <p>{{data.description}}</p>
+                </div>
+            </div>
+
+            <div class="project-overview-grid">
+                <article class="project-overview-card">
+                    <span>Total Tasks</span>
+                    <strong>{{data.tasksCount}}</strong>
+                </article>
+
+                <article class="project-overview-card">
+                    <span>Completed</span>
+                    <strong>{{data.completedTasksCount}}</strong>
+                </article>
+
+                <article class="project-overview-card">
+                    <span>In Progress</span>
+                    <strong>{{data.inProgressTasksCount}}</strong>
+                </article>
+
+                <article class="project-overview-card">
+                    <span>Members</span>
+                    <strong>{{data.membersCount}}</strong>
+                </article>
+            </div>
+
+            <div class="project-details-progress-card">
+                <div class="project-progress-info">
+                    <div>
+                        <h2>Project Progress</h2>
+                        <p>5 of 12 tasks completed</p>
+                    </div>
+
+                    <strong>42%</strong>
+                </div>
+
+                <div class="project-details-progress-bar">
+                    <div class="project-details-progress-value"></div>
+                </div>
+            </div>
+
+            <div class="project-details-layout">
+
+                <section class="project-main-content">
+                    <div class="project-section-heading">
+                        <div>
+                            <p class="section-label">Work</p>
+                            <h2>Tasks</h2>
+                        </div>
+
+                        <a href="/projects/example/tasks" class="section-link">
+                            View all tasks →
+                        </a>
+                    </div>
+
+                    <div class="task-list">
+
+                        <article class="task-row">
+                            <div class="task-row-main">
+                                <span class="task-status-dot task-dot-progress"></span>
+
+                                <div>
+                                    <h3>Implement user authentication</h3>
+
+                                    <div class="task-meta">
+                                        <span>In Progress</span>
+                                        <span>High Priority</span>
+                                        <span>Due Aug 14</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="task-assignee">
+                                <span class="member-avatar">PS</span>
+
+                                <div>
+                                    <small>Assigned to</small>
+                                    <strong>Peter Smith</strong>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="task-row">
+                            <div class="task-row-main">
+                                <span class="task-status-dot task-dot-completed"></span>
+
+                                <div>
+                                    <h3>Create Prisma database models</h3>
+
+                                    <div class="task-meta">
+                                        <span>Completed</span>
+                                        <span>High Priority</span>
+                                        <span>Completed Aug 8</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="task-assignee">
+                                <span class="member-avatar">JS</span>
+
+                                <div>
+                                    <small>Assigned to</small>
+                                    <strong>Jane Smith</strong>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="task-row">
+                            <div class="task-row-main">
+                                <span class="task-status-dot task-dot-todo"></span>
+
+                                <div>
+                                    <h3>Build project details page</h3>
+
+                                    <div class="task-meta">
+                                        <span>To Do</span>
+                                        <span>Medium Priority</span>
+                                        <span>Due Aug 18</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="task-assignee">
+                                <span class="member-avatar">ME</span>
+
+                                <div>
+                                    <small>Assigned to</small>
+                                    <strong>Me</strong>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="task-row">
+                            <div class="task-row-main">
+                                <span class="task-status-dot task-dot-todo"></span>
+
+                                <div>
+                                    <h3>Add project member invitations</h3>
+
+                                    <div class="task-meta">
+                                        <span>To Do</span>
+                                        <span>Low Priority</span>
+                                        <span>No due date</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="task-assignee task-unassigned">
+                                <div>
+                                    <small>Assigned to</small>
+                                    <strong>Unassigned</strong>
+                                </div>
+                            </div>
+                        </article>
+
+                    </div>
+                </section>
+
+                <aside class="project-sidebar">
+
+                    <section class="project-sidebar-card">
+                        <div class="sidebar-card-header">
+                            <h2>Project Members</h2>
+
+                            <button type="button" class="sidebar-action-button">
+                                + Add
+                            </button>
+                        </div>
+
+                        <div class="members-list">
+                            <div class="member-item">
+                                <span class="member-avatar">PS</span>
+
+                                <div class="member-info">
+                                    <strong>{{data.currentMember.firstName}} {{data.currentMember.lastName}}</strong>
+                                    <span>{{data.currentMember.email}}</span>
+                                </div>
+
+                                <span class="member-role owner-role">
+                                    {{data.currentMember.role}}
+                                </span>
+                            </div>
+                            {{#each data.members}}
+                            <div class="member-item">
+                                <span class="member-avatar">JS</span>
+
+                                <div class="member-info">
+                                    <strong>{{user.firstName}} {{user.lastName}}</strong>
+                                    <span>{{user.email}}</span>
+                                </div>
+
+                                <span class="member-role">{{role}}</span>
+                            </div>
+                            {{/each}}
+
+
+                        </div>
+                    </section>
+
+                    <section class="project-sidebar-card">
+                        <h2>Project Information</h2>
+
+                        <dl class="project-info-list">
+                            <div>
+                                <dt>Status</dt>
+                                <dd>{{data.status}}</dd>
+                            </div>
+
+                            <div>
+                                <dt>Created</dt>
+                                <dd>{{data.createdAt}}</dd>
+                            </div>
+
+                            <div>
+                                <dt>Last updated</dt>
+                                <dd>{{data.updatedAt}}</dd>
+                            </div>
+
+                            <div>
+                                <dt>Your role</dt>
+                                <dd>{{data.currentMember.role}}</dd>
+                            </div>
+                        </dl>
+                    </section>
+
+                </aside>
+
+            </div>
+        </div>
+    </section>
+</main>

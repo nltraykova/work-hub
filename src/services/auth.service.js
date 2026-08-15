@@ -16,7 +16,7 @@ async function register(userData) {
 
     const { rePassword, ...data } = validationResult.data;
 
-    const existingUser = await userRepository.findByEmail(data.email);
+    const existingUser = await userRepository.getByEmail(data.email);
 
     if(existingUser) {
         return {
@@ -64,7 +64,7 @@ async function login(email, userPassword) {
 
     const data = validationResult.data;
 
-    const existingUser = await userRepository.findByEmail(data.email);
+    const existingUser = await userRepository.getByEmail(data.email);
 
     if(!existingUser) {
         return {
