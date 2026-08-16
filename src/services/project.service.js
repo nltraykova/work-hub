@@ -102,6 +102,8 @@ function buildDetails(project, currentMember, userId) {
         task => task.status === 'IN_PROGRESS'
     ).length;
 
+    const progressPercentage = tasksCount !== 0 ? (completedTasksCount / tasksCount) * 100 : 0;
+
     const createdAt = formatDate(project.createdAt);
 
     const updatedAt = formatLastUpdated(project.updatedAt);
@@ -115,7 +117,8 @@ function buildDetails(project, currentMember, userId) {
         membersCount,
         tasksCount,
         completedTasksCount,
-        inProgressTasksCount
+        inProgressTasksCount,
+        progressPercentage,
     }
 
     return projectDetails;

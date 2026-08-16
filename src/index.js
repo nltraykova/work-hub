@@ -27,6 +27,10 @@ app.use(authMiddleware);
 
 app.use(routes);
 
+app.get('*url', (req, res) => {
+    res.status(404).render('404');
+});
+
 app.listen(3000, () => {
     console.log('Server is listening on http://localhost:3000...')
 });

@@ -10,7 +10,7 @@
                 </a>
 
                 <div class="project-details-actions">
-                    <a href="/projects/{{project.id}}/edit" class="button button-secondary">
+                    <a href="/projects/{{data.id}}/edit" class="button button-secondary">
                         Edit Project
                     </a>
 
@@ -57,10 +57,10 @@
                 <div class="project-progress-info">
                     <div>
                         <h2>Project Progress</h2>
-                        <p>5 of 12 tasks completed</p>
+                        <p>{{data.completedTasksCount}} of {{data.tasksCount}} tasks completed</p>
                     </div>
 
-                    <strong>42%</strong>
+                    <strong>{{data.progressPercentage}}%</strong>
                 </div>
 
                 <div class="project-details-progress-bar">

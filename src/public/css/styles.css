@@ -2195,3 +2195,90 @@ main.project-create-page {
         grid-template-columns: 1fr 1fr;
     }
 }
+
+/* ========================================
+   ERROR PAGES - 401 / 403
+======================================== */
+
+.error-page {
+    min-height: calc(100vh - 76px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 64px 20px;
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(91, 91, 214, 0.1),
+            transparent 32%
+        ),
+        #f8fafc;
+}
+
+.error-card {
+    width: 100%;
+    max-width: 540px;
+    padding: 48px 40px;
+    text-align: center;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 20px;
+    box-shadow: 0 20px 55px rgba(15, 23, 42, 0.1);
+}
+
+.error-code {
+    margin-bottom: 14px;
+    color: #5b5bd6;
+    font-size: 72px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.05em;
+}
+
+.error-card h1 {
+    margin: 0;
+    color: #111827;
+    font-size: 30px;
+    line-height: 1.2;
+}
+
+.error-card p {
+    max-width: 420px;
+    margin: 16px auto 28px;
+    color: #6b7280;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.error-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+@media (max-width: 520px) {
+    .error-page {
+        min-height: auto;
+        padding: 40px 14px;
+    }
+
+    .error-card {
+        padding: 36px 22px;
+    }
+
+    .error-code {
+        font-size: 58px;
+    }
+
+    .error-card h1 {
+        font-size: 26px;
+    }
+
+    .error-actions {
+        flex-direction: column;
+    }
+
+    .error-actions .button {
+        width: 100%;
+    }
+}

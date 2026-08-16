@@ -46,7 +46,7 @@ projectController.get('/:projectId', isAuth, async (req, res) => {
         if (result.type === 'notFound') {
             return res.status(404).render('404');
         } else if(result.type === 'forbidden') {
-            return res.status(403).redirect('/auth/login');
+            return res.status(403).render('403');
         };
     };
 
