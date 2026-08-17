@@ -75,27 +75,27 @@
                     <div class="project-progress">
                         <div class="project-progress-header">
                             <span>Progress</span>
-                            <strong>68%</strong>
+                            <strong>{{progressPercentage}}%</strong>
                         </div>
 
                         <div class="project-progress-bar">
-                            <div class="project-progress-value progress-68"></div>
+                            <div class="project-progress-value" style="width: {{progressPercentage}}%;"></div>
                         </div>
                     </div>
 
                     <div class="project-stats">
                         <div>
-                            <strong>24</strong>
+                            <strong>{{tasksCount}}</strong>
                             <span>Tasks</span>
                         </div>
 
                         <div>
-                            <strong>16</strong>
+                            <strong>{{completedTasksCount}}</strong>
                             <span>Completed</span>
                         </div>
 
                         <div>
-                            <strong>4</strong>
+                            <strong>{{membersCount}}</strong>
                             <span>Members</span>
                         </div>
                     </div>

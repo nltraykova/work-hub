@@ -15,6 +15,16 @@ async function getMy(userId) {
                     userId
                 },
             },
+            _count: {
+                select: {
+                    members: true,
+                },
+            },
+            tasks: {
+                select: {
+                    status: true,
+                },
+            },
         },
     });
 

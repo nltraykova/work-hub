@@ -5,17 +5,30 @@ import { formatDate, formatLastUpdated } from "../utils/date.utils.js";
 async function getMy(userId) {
     const projects = await projectRepository.getMy(userId);
 
-    const projectsWithRole = projects.map(project => {
+    const projectsData = projects.map(project => {
         const currentUserRole = project.members[0]?.role;
+        const membersCount = project._count.members;
+        const tasksCount = project.tasks.length;
+        const completedTasksCount = project.tasks.filter(
+            task => task.status === 'COMPLETED'
+        ).length;
+
+        const progressPercentage = tasksCount > 0 
+            ? Math.round((completedTasksCount / tasksCount) * 100)
+            : 0;
 
         return {
             ...project,
-            currentUserRole
+            currentUserRole,
+            membersCount,
+            tasksCount,
+            completedTasksCount,
+            progressPercentage,
         };
     });
 
     return {
-        projects: projectsWithRole,
+        projects: projectsData,
         projectsCount: projects.length,
         activeProjectsCount: projects.filter(
             project => project.status === 'ACTIVE'
@@ -189,7 +202,9 @@ function buildDetails(project, currentMember, userId) {
         task => task.status === 'IN_PROGRESS'
     ).length;
 
-    const progressPercentage = tasksCount !== 0 ? (completedTasksCount / tasksCount) * 100 : 0;
+    const progressPercentage = tasksCount !== 0 
+        ? Math.round((completedTasksCount / tasksCount) * 100)
+        : 0;
 
     const createdAt = formatDate(project.createdAt);
 
