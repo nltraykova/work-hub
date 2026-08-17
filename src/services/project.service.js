@@ -1,7 +1,6 @@
 import projectRepository from "../repositories/project.repository.js";
-import userRepository from "../repositories/user.repository.js";
-import createProjectSchema from "../schemas/project.schema.js";
-import { formatDate, formatLastUpdated, isToday } from "../utils/date.utils.js";
+import { createProjectSchema, editProjectSchema } from "../schemas/project.schema.js";
+import { formatDate, formatLastUpdated } from "../utils/date.utils.js";
 
 async function getMy(userId) {
     const projects = await projectRepository.getMy(userId);
@@ -30,7 +29,7 @@ async function getMy(userId) {
     };
 }
 
-async function getById(projectId, userId) {
+async function getDetails(projectId, userId) {
     const project = await projectRepository.getById(projectId);
 
     if (!project) {
@@ -42,8 +41,8 @@ async function getById(projectId, userId) {
     };
 
     const currentMember = project.members.find(member => member.userId === userId);
-    
-    if(!currentMember) {
+
+    if (!currentMember) {
         return {
             success: false,
             type: 'forbidden',
@@ -80,6 +79,70 @@ async function create(projectData, ownerId) {
     };
 }
 
+async function getEditData(projectId, userId) {
+    const project = await projectRepository.getById(projectId);
+
+    if (!project) {
+        return {
+            success: false,
+            type: 'notFound',
+            error: 'Project not found',
+        };
+    };
+
+    if (project.ownerId !== userId) {
+        return {
+            success: false,
+            type: 'forbidden',
+            error: 'You do not have permission to edit this project'
+        };
+    };
+
+     return {
+        success: true,
+        data: project,
+    };
+}
+
+async function edit(projectId, projectData, userId) {
+    const project = await projectRepository.getById(projectId);
+
+    if (!project) {
+        return {
+            success: false,
+            type: 'notFound',
+            error: 'Project not found',
+        };
+    };
+
+    if (project.ownerId !== userId) {
+        return {
+            success: false,
+            type: 'forbidden',
+            error: 'You do not have permission to edit this project'
+        };
+    };
+
+    const validationResult = editProjectSchema.safeParse(projectData);
+
+    if (!validationResult.success) {
+        return {
+            success: false,
+            type: 'validation',
+            errors: validationResult.error.flatten().fieldErrors,
+        };
+    };
+
+    const data = validationResult.data;
+
+    const editedProject = await projectRepository.edit(projectId, data, userId);
+
+    return {
+        success: true,
+        data: editedProject,
+    };
+}
+
 //helpers
 function buildDetails(project, currentMember, userId) {
     const currentMemberData = {
@@ -87,6 +150,7 @@ function buildDetails(project, currentMember, userId) {
         lastName: currentMember.user.lastName,
         email: currentMember.user.email,
         role: currentMember.role,
+        isOwner: currentMember.role === 'OWNER',
     };
 
     const members = project.members.filter(
@@ -126,8 +190,10 @@ function buildDetails(project, currentMember, userId) {
 
 const projectService = {
     getMy,
-    getById,
+    getDetails,
+    getEditData,
     create,
+    edit,
 };
 
 export default projectService;

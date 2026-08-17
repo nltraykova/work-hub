@@ -1,6 +1,6 @@
 import * as z from 'zod';
 
-const createProjectSchema = z.object({
+export const createProjectSchema = z.object({
     name: z.string()
         .trim()
         .min(3, { error: 'Project must be at least 3 characters long' })
@@ -11,4 +11,9 @@ const createProjectSchema = z.object({
         .optional(),
 });
 
-export default createProjectSchema;
+export const editProjectSchema = createProjectSchema.extend({
+    status: z.enum(
+        ['ACTIVE', 'COMPLETED', 'ARCHIVED'],
+        { error: 'Invalid status' },
+    ),
+});

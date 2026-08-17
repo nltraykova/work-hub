@@ -1,0 +1,84 @@
+{{setTitle 'Edit Project | WorkHub'}}
+
+<main class="project-edit-page">
+    <section class="project-edit-card">
+        <div class="project-edit-header">
+            <p class="section-label">Project settings</p>
+
+            <h1>Edit project</h1>
+
+            <p>
+                Update the project information and status.
+            </p>
+        </div>
+
+        {{#if error}}
+        <div class="alert alert-error" role="alert">
+            {{error}}
+        </div>
+        {{/if}}
+
+        <form method="POST" class="project-edit-form">
+            <div class="form-group">
+                <label for="name">Project name</label>
+
+                <input type="text" id="name" name="name" value="{{project.name}}" maxlength="80">
+                {{#if errors.name}}
+                <p class="field-error">{{errors.name}}</p>
+                {{/if}}
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+
+                <textarea id="description" name="description" maxlength="500" rows="6">{{project.description}}</textarea>
+
+                <div class="field-meta">
+                    <span>Optional</span>
+                    <span>Maximum 500 characters</span>
+                </div>
+                {{#if errors.description}}
+                <p class="field-error">{{errors.description}}</p>
+                {{/if}}
+            </div>
+
+            <div class="form-group">
+                <label for="status">Project status</label>
+
+                <select id="status" name="status">
+                    {{#each options}}
+                    <option value="{{value}}" {{#if selected}}selected{{/if}}>{{name}}</option>
+                    {{/each}}
+                </select>
+                {{#if errors.status}}
+                <p class="field-error">{{errors.status}}</p>
+                {{/if}}
+            </div>
+
+            <div class="project-edit-actions">
+                <a href="/projects/{{project.id}}" class="button button-secondary">
+                    Cancel
+                </a>
+
+                <button type="submit" class="button button-primary edit-project-submit">
+                    Save Changes
+                </button>
+            </div>
+        </form>
+
+        <div class="project-danger-zone">
+            <div>
+                <h2>Danger zone</h2>
+
+                <p>
+                    Deleting a project permanently removes its tasks,
+                    comments, and memberships.
+                </p>
+            </div>
+
+            <button type="button" class="button button-danger">
+                Delete Project
+            </button>
+        </div>
+    </section>
+</main>

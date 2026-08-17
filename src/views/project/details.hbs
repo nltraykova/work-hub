@@ -8,12 +8,12 @@
                 <a href="/projects/my-projects" class="back-link">
                     ← Back to My Projects
                 </a>
-
                 <div class="project-details-actions">
+                    {{#if data.currentMember.isOwner}}
                     <a href="/projects/{{data.id}}/edit" class="button button-secondary">
                         Edit Project
                     </a>
-
+                    {{/if}}
                     <a href="/projects/example/tasks/create" class="button button-primary">
                         + New Task
                     </a>

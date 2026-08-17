@@ -56,12 +56,29 @@ async function create(data, ownerId) {
     });
 
     return newProject;
-};
+}
+
+async function edit(projectId, data, userId) {
+    const editedProject = await prisma.project.update({
+        where: {
+            id: projectId,
+            ownerId: userId,
+        },
+        data: {
+            name: data.name,
+            description: data.description,
+            status: data.status,
+        },
+    });
+
+    return editedProject;
+}
 
 const projectRepository = {
     getMy,
     getById,
     create,
+    edit,
 };
 
 export default projectRepository;

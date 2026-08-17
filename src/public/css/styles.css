@@ -2282,3 +2282,193 @@ main.project-create-page {
         width: 100%;
     }
 }
+
+/* ========================================
+   EDIT PROJECT PAGE
+======================================== */
+
+.project-edit-page {
+    min-height: calc(100vh - 76px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 64px 20px;
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(91, 91, 214, 0.1),
+            transparent 32%
+        ),
+        #f8fafc;
+}
+
+.project-edit-card {
+    width: 100%;
+    max-width: 650px;
+    padding: 40px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 20px;
+    box-shadow: 0 20px 55px rgba(15, 23, 42, 0.1);
+}
+
+.project-edit-header {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.project-edit-header h1 {
+    margin: 0;
+    color: #111827;
+    font-size: 32px;
+    line-height: 1.2;
+}
+
+.project-edit-header p:last-child {
+    margin-top: 10px;
+    color: #6b7280;
+    font-size: 15px;
+}
+
+.project-edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.project-edit-page .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.project-edit-page .form-group label {
+    color: #1f2937;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.project-edit-page .field-error {
+    margin: 0;
+    color: #dc2626;
+    font-size: 13px;
+}
+
+.project-edit-page .form-group input,
+.project-edit-page .form-group textarea,
+.project-edit-page .form-group select {
+    width: 100%;
+    padding: 0 14px;
+    color: #111827;
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    outline: none;
+    font: inherit;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.project-edit-page .form-group input,
+.project-edit-page .form-group select {
+    height: 48px;
+}
+
+.project-edit-page .form-group textarea {
+    min-height: 140px;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    line-height: 1.5;
+    resize: vertical;
+}
+
+.project-edit-page .form-group input:focus,
+.project-edit-page .form-group textarea:focus,
+.project-edit-page .form-group select:focus {
+    border-color: #5b5bd6;
+    box-shadow: 0 0 0 4px rgba(91, 91, 214, 0.12);
+}
+
+.project-edit-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 4px;
+}
+
+.edit-project-submit {
+    border: none;
+    cursor: pointer;
+}
+
+/* Danger zone */
+
+.project-danger-zone {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-top: 34px;
+    padding-top: 28px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.project-danger-zone h2 {
+    margin: 0;
+    color: #991b1b;
+    font-size: 16px;
+}
+
+.project-danger-zone p {
+    max-width: 410px;
+    margin-top: 6px;
+    color: #6b7280;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.button-danger {
+    flex: 0 0 auto;
+    color: #b91c1c;
+    background: #ffffff;
+    border-color: #fecaca;
+    cursor: pointer;
+}
+
+.button-danger:hover {
+    color: #ffffff;
+    background: #dc2626;
+    border-color: #dc2626;
+}
+
+@media (max-width: 600px) {
+    .project-edit-page {
+        padding: 40px 14px;
+    }
+
+    .project-edit-card {
+        padding: 30px 20px;
+    }
+
+    .project-edit-header h1 {
+        font-size: 28px;
+    }
+
+    .project-edit-actions {
+        flex-direction: column-reverse;
+    }
+
+    .project-edit-actions .button {
+        width: 100%;
+    }
+
+    .project-danger-zone {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .project-danger-zone .button {
+        width: 100%;
+    }
+}
