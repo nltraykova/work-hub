@@ -98,7 +98,7 @@ async function getEditData(projectId, userId) {
         };
     };
 
-     return {
+    return {
         success: true,
         data: project,
     };
@@ -133,13 +133,36 @@ async function edit(projectId, projectData, userId) {
         };
     };
 
-    const data = validationResult.data;
-
-    const editedProject = await projectRepository.edit(projectId, data, userId);
+    await projectRepository.edit(projectId, validationResult.data, userId);
 
     return {
         success: true,
-        data: editedProject,
+    };
+}
+
+async function remove(projectId, userId) {
+    const project = await projectRepository.getById(projectId);
+
+    if (!project) {
+        return {
+            success: false,
+            type: 'notFound',
+            error: 'Project not found',
+        };
+    };
+
+    if (project.ownerId !== userId) {
+        return {
+            success: false,
+            type: 'forbidden',
+            error: 'You do not have permission to delete this project'
+        };
+    };
+
+    await projectRepository.remove(projectId, userId);
+
+     return {
+        success: true,
     };
 }
 
@@ -194,6 +217,7 @@ const projectService = {
     getEditData,
     create,
     edit,
+    remove,
 };
 
 export default projectService;

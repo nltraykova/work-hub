@@ -12,7 +12,6 @@ projectController.get('/my-projects', isAuth, async (req, res) => {
     res.render('project/myProjects', { data });
 });
 
-
 projectController.get('/create', isAuth, (req, res) => {
     res.render('project/create');
 });
@@ -45,7 +44,9 @@ projectController.get('/:projectId', isAuth, async (req, res) => {
     if (!result.success) {
         if (result.type === 'notFound') {
             return res.status(404).render('404');
-        } else if(result.type === 'forbidden') {
+        };
+        
+        if(result.type === 'forbidden') {
             return res.status(403).render('403');
         };
     };
@@ -64,7 +65,9 @@ projectController.get('/:projectId/edit', isAuth, async (req, res) => {
     if(!result.success) {
         if(result.type === 'notFound') {
             return res.status(404).render('404');
-        } else if(result.type === 'forbidden') {
+        };
+        
+        if(result.type === 'forbidden') {
             return res.status(403).render('403');
         };
     };
@@ -97,9 +100,13 @@ projectController.post('/:projectId/edit', isAuth, async (req, res) => {
                 },
                 options,
              });
-        } else if(result.type === 'notFound') {
+        };
+
+        if(result.type === 'notFound') {
             return res.status(404).render('404');
-        } else if(result.type === 'forbidden') {
+        };
+        
+        if(result.type === 'forbidden') {
             return res.status(403).render('403');
         };
     };
@@ -107,6 +114,26 @@ projectController.post('/:projectId/edit', isAuth, async (req, res) => {
     res.redirect(`/projects/${projectId}`);
 });
 
+projectController.post('/:projectId/delete', isAuth, async (req, res) => {
+    const projectId = req.params.projectId;
+    const userId = req.user.id;
+
+    const result = await projectService.remove(projectId, userId);
+
+    if(!result.success) {
+        if(result.type === 'notFound') {
+            return res.status(404).render('404');
+        };
+        
+        if(result.type === 'forbidden') {
+            return res.status(403).render('403')
+        };
+    };
+
+    res.redirect('/projects/my-projects');
+});
+
+//helpers
 function getStatusOptions(projectStatus) {
     const statuses = ['ACTIVE', 'COMPLETED', 'ARCHIVED'];
 

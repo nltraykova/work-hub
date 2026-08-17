@@ -2,7 +2,7 @@ import { prisma } from "../lib/prisma.js";
 
 async function getMy(userId) {
     const myProjects = await prisma.project.findMany({
-        where: { 
+        where: {
             members: {
                 some: {
                     userId
@@ -45,7 +45,7 @@ async function create(data, ownerId) {
         data: {
             ...data,
             ownerId,
-            
+
             members: {
                 create: {
                     userId: ownerId,
@@ -59,7 +59,7 @@ async function create(data, ownerId) {
 }
 
 async function edit(projectId, data, userId) {
-    const editedProject = await prisma.project.update({
+    await prisma.project.update({
         where: {
             id: projectId,
             ownerId: userId,
@@ -70,8 +70,15 @@ async function edit(projectId, data, userId) {
             status: data.status,
         },
     });
+}
 
-    return editedProject;
+async function remove(projectId, userId) {
+    await prisma.project.delete({
+        where: {
+            id: projectId,
+            ownerId: userId,
+        }
+    });
 }
 
 const projectRepository = {
@@ -79,6 +86,7 @@ const projectRepository = {
     getById,
     create,
     edit,
+    remove,
 };
 
 export default projectRepository;
