@@ -83,7 +83,7 @@
                     </div>
 
                     <div class="task-list">
-                        {{#each data.tasks}}
+                        {{#each data.lastThreeTasks}}
                         <article class="task-row">
                             <div class="task-row-main">
                                 <span class="task-status-dot task-dot-progress"></span>
@@ -100,14 +100,16 @@
                             </div>
 
                             <div class="task-assignee">
-                                <span class="member-avatar">PS</span>
+                                <span class="member-avatar">{{assigneeAvatar}}</span>
 
                                 <div>
                                     <small>Assigned to</small>
-                                    <strong>{{#if assignee}} {{assignee.firstName}} {{assignee.lastName}} {{else}} No assignee yet {{/if}}</strong>
+                                    <strong>{{#if assignee}} {{assignee.firstName}} {{assignee.lastName}} {{else}} No assignee {{/if}}</strong>
                                 </div>
                             </div>
                         </article>
+                        {{else}}
+                        <p>No tasks yet</p>
                         {{/each}}
                     </div>
                 </section>
@@ -125,7 +127,7 @@
 
                         <div class="members-list">
                             <div class="member-item">
-                                <span class="member-avatar">PS</span>
+                                <span class="member-avatar">{{data.currentMember.avatar}}</span>
 
                                 <div class="member-info">
                                     <strong>{{data.currentMember.firstName}} {{data.currentMember.lastName}}</strong>

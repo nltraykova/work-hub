@@ -1,6 +1,8 @@
 import projectRepository from "../repositories/project.repository.js";
+import taskRepository from "../repositories/task.repository.js";
 import { createProjectSchema, editProjectSchema } from "../schemas/project.schema.js";
 import { formatDate, formatLastUpdated } from "../utils/date.utils.js";
+import { makeAvatar } from "../utils/other.utils.js";
 
 async function getMy(userId) {
     const projects = await projectRepository.getMy(userId);
@@ -63,7 +65,7 @@ async function getDetails(projectId, userId) {
         };
     };
 
-    const data = buildDetails(project, currentMember, userId);
+    const data = await buildDetails(project, currentMember, userId);
 
     return {
         success: true,
@@ -184,28 +186,34 @@ async function remove(projectId, userId) {
 }
 
 //helpers
-function buildDetails(project, currentMember, userId) {
+async function buildDetails(project, currentMember, userId) {
     const currentMemberData = {
         firstName: currentMember.user.firstName,
         lastName: currentMember.user.lastName,
         email: currentMember.user.email,
         role: currentMember.role,
+        avatar: makeAvatar(currentMember.user.firstName, currentMember.user.lastName),
         isOwner: currentMember.role === 'OWNER',
     };
 
     const members = project.members.filter(
         member => member.userId !== userId
     );
+    
     const membersCount = project.members.length;
 
-    const tasks = project.tasks.map(task => {
+    const lastThreeTasks = project.tasks.map(task => {
         return {
             ...task,
             dueDate: task.dueDate ? formatDate(task.dueDate) : 'No Due Date',
+            assigneeAvatar: task.assignee ? makeAvatar(task.assignee?.firstName, task.assignee?.lastName) : '',
         }
     });
 
-    const tasksCount = project.tasks.length;
+    const allTasks = await taskRepository.getAllTasksByProject(project.id);
+    
+    const tasksCount = allTasks.length;
+
     const completedTasksCount = project.tasks.filter(
         task => task.status === 'COMPLETED'
     ).length;
@@ -228,7 +236,7 @@ function buildDetails(project, currentMember, userId) {
         currentMember: currentMemberData,
         members,
         membersCount,
-        tasks,
+        lastThreeTasks,
         tasksCount,
         completedTasksCount,
         inProgressTasksCount,
