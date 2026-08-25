@@ -198,6 +198,13 @@ function buildDetails(project, currentMember, userId) {
     );
     const membersCount = project.members.length;
 
+    const tasks = project.tasks.map(task => {
+        return {
+            ...task,
+            dueDate: task.dueDate ? formatDate(task.dueDate) : 'No Due Date',
+        }
+    });
+
     const tasksCount = project.tasks.length;
     const completedTasksCount = project.tasks.filter(
         task => task.status === 'COMPLETED'
@@ -221,6 +228,7 @@ function buildDetails(project, currentMember, userId) {
         currentMember: currentMemberData,
         members,
         membersCount,
+        tasks,
         tasksCount,
         completedTasksCount,
         inProgressTasksCount,

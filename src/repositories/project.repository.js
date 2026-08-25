@@ -42,7 +42,20 @@ async function getById(projectId) {
                     user: true,
                 },
             },
-            tasks: true,
+            tasks: {
+                include: {
+                    assignee: {
+                        select: {
+                            firstName: true,
+                            lastName: true,
+                        },
+                    },
+                },
+                take: 3,
+                orderBy: {
+                    createdAt: "desc",
+                },
+            },
             owner: true,
         },
     });

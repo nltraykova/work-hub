@@ -83,18 +83,18 @@
                     </div>
 
                     <div class="task-list">
-
+                        {{#each data.tasks}}
                         <article class="task-row">
                             <div class="task-row-main">
                                 <span class="task-status-dot task-dot-progress"></span>
 
                                 <div>
-                                    <h3>Implement user authentication</h3>
+                                    <h3>{{title}}</h3>
 
                                     <div class="task-meta">
-                                        <span>In Progress</span>
-                                        <span>High Priority</span>
-                                        <span>Due Aug 14</span>
+                                        <span>{{status}}</span>
+                                        <span>{{priority}}</span>
+                                        <span>{{dueDate}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -104,84 +104,11 @@
 
                                 <div>
                                     <small>Assigned to</small>
-                                    <strong>Peter Smith</strong>
+                                    <strong>{{#if assignee}} {{assignee.firstName}} {{assignee.lastName}} {{else}} No assignee yet {{/if}}</strong>
                                 </div>
                             </div>
                         </article>
-
-                        <article class="task-row">
-                            <div class="task-row-main">
-                                <span class="task-status-dot task-dot-completed"></span>
-
-                                <div>
-                                    <h3>Create Prisma database models</h3>
-
-                                    <div class="task-meta">
-                                        <span>Completed</span>
-                                        <span>High Priority</span>
-                                        <span>Completed Aug 8</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="task-assignee">
-                                <span class="member-avatar">JS</span>
-
-                                <div>
-                                    <small>Assigned to</small>
-                                    <strong>Jane Smith</strong>
-                                </div>
-                            </div>
-                        </article>
-
-                        <article class="task-row">
-                            <div class="task-row-main">
-                                <span class="task-status-dot task-dot-todo"></span>
-
-                                <div>
-                                    <h3>Build project details page</h3>
-
-                                    <div class="task-meta">
-                                        <span>To Do</span>
-                                        <span>Medium Priority</span>
-                                        <span>Due Aug 18</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="task-assignee">
-                                <span class="member-avatar">ME</span>
-
-                                <div>
-                                    <small>Assigned to</small>
-                                    <strong>Me</strong>
-                                </div>
-                            </div>
-                        </article>
-
-                        <article class="task-row">
-                            <div class="task-row-main">
-                                <span class="task-status-dot task-dot-todo"></span>
-
-                                <div>
-                                    <h3>Add project member invitations</h3>
-
-                                    <div class="task-meta">
-                                        <span>To Do</span>
-                                        <span>Low Priority</span>
-                                        <span>No due date</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="task-assignee task-unassigned">
-                                <div>
-                                    <small>Assigned to</small>
-                                    <strong>Unassigned</strong>
-                                </div>
-                            </div>
-                        </article>
-
+                        {{/each}}
                     </div>
                 </section>
 
