@@ -1,0 +1,122 @@
+{{setTitle 'Create Task | WorkHub'}}
+
+<main class="task-create-page">
+    <section class="task-create-card">
+        <div class="task-create-header">
+            <p class="section-label">Task management</p>
+
+            <h1>Create task</h1>
+
+            <p>
+                Add a new task to the project and define its priority, status, assignee, and due date.
+            </p>
+        </div>
+
+        <form method="POST" class="task-create-form">
+            <div class="form-group">
+                <label for="title">Task title</label>
+
+                <input type="text" id="title" name="title" value="{{formData.title}}"
+                    placeholder="e.g. Implement project filtering">
+
+                {{#if errors.title}}
+                <p class="field-error">{{errors.title}}</p>
+                {{/if}}
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+
+                <textarea id="description" name="description" maxlength="1000" rows="6"
+                    placeholder="Describe what needs to be done...">{{formData.description}}</textarea>
+
+                <div class="field-meta">
+                    <span>Optional</span>
+                    <span>Maximum 1000 characters</span>
+                </div>
+
+                {{#if errors.description}}
+                <p class="field-error">{{errors.description}}</p>
+                {{/if}}
+            </div>
+
+            <div class="task-form-row">
+                <div class="form-group">
+                    <label for="status">Status</label>
+
+                    <select id="status" name="status">
+                        <option value="TODO">To Do</option>
+                        <option value="IN_PROGRESS">In Progress</option>
+                        <option value="COMPLETED">Completed</option>
+                    </select>
+
+                    {{#if errors.status}}
+                    <p class="field-error">{{errors.status}}</p>
+                    {{/if}}
+                </div>
+
+                <div class="form-group">
+                    <label for="priority">Priority</label>
+
+                    <select id="priority" name="priority">
+                        <option value="LOW">Low</option>
+                        <option value="MEDIUM" selected>Medium</option>
+                        <option value="HIGH">High</option>
+                    </select>
+
+                    {{#if errors.priority}}
+                    <p class="field-error">{{errors.priority}}</p>
+                    {{/if}}
+                </div>
+            </div>
+
+            <div class="task-form-row">
+                <div class="form-group">
+                    <label for="assigneeId">Assignee</label>
+
+                    <select id="assigneeId" name="assigneeId">
+                        <option value="">Unassigned</option>
+                        {{#each members}}
+                        <option value="{{user.id}}">
+                            {{user.firstName}} {{user.lastName}}
+                        </option>
+                        {{/each}}
+
+                    </select>
+
+                    <div class="field-meta">
+                        <span>Optional</span>
+                    </div>
+
+                    {{#if errors.assigneeId}}
+                    <p class="field-error">{{errors.assigneeId}}</p>
+                    {{/if}}
+                </div>
+
+                <div class="form-group">
+                    <label for="dueDate">Due date</label>
+
+                    <input type="date" id="dueDate" name="dueDate" value="{{formData.dueDate}}">
+
+                    <div class="field-meta">
+                        <span>Optional</span>
+                    </div>
+
+                    {{#if errors.dueDate}}
+                    <p class="field-error">{{errors.dueDate}}</p>
+                    {{/if}}
+                </div>
+            </div>
+
+            <div class="task-create-actions">
+                <a href="/projects/{{projectId}}" class="button button-secondary">
+                    Cancel
+                </a>
+
+                <button type="submit" class="button button-primary create-task-submit">
+                    Create Task
+                </button>
+            </div>
+        </form>
+    </section>
+</main>

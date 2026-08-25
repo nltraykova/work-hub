@@ -2452,3 +2452,176 @@ main.project-create-page {
         width: 100%;
     }
 }
+
+/* ========================================
+   CREATE TASK PAGE
+======================================== */
+
+.task-create-page {
+    min-height: calc(100vh - 76px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 64px 20px;
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(91, 91, 214, 0.1),
+            transparent 32%
+        ),
+        #f8fafc;
+}
+
+.task-create-card {
+    width: 100%;
+    max-width: 760px;
+    padding: 40px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 20px;
+    box-shadow: 0 20px 55px rgba(15, 23, 42, 0.1);
+}
+
+.task-create-header {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.task-create-header h1 {
+    margin: 0;
+    color: #111827;
+    font-size: 32px;
+    line-height: 1.2;
+}
+
+.task-create-header p:last-child {
+    max-width: 560px;
+    margin: 10px auto 0;
+    color: #6b7280;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.task-create-form {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.task-create-page .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.task-create-page .form-group label {
+    color: #1f2937;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.task-create-page .form-group input,
+.task-create-page .form-group textarea,
+.task-create-page .form-group select {
+    width: 100%;
+    padding: 0 14px;
+    color: #111827;
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    outline: none;
+    font: inherit;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.task-create-page .form-group input,
+.task-create-page .form-group select {
+    height: 48px;
+}
+
+.task-create-page .form-group textarea {
+    min-height: 140px;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    line-height: 1.5;
+    resize: vertical;
+}
+
+.task-create-page .form-group input:hover,
+.task-create-page .form-group textarea:hover,
+.task-create-page .form-group select:hover {
+    border-color: #9ca3af;
+}
+
+.task-create-page .form-group input:focus,
+.task-create-page .form-group textarea:focus,
+.task-create-page .form-group select:focus {
+    border-color: #5b5bd6;
+    box-shadow: 0 0 0 4px rgba(91, 91, 214, 0.12);
+}
+
+.task-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.task-create-page .field-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    color: #9ca3af;
+    font-size: 12px;
+}
+
+.task-create-page .field-error {
+    margin: 0;
+    color: #dc2626;
+    font-size: 13px;
+}
+
+.task-create-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 4px;
+}
+
+.create-task-submit {
+    border: none;
+    cursor: pointer;
+}
+
+@media (max-width: 650px) {
+    .task-create-page {
+        min-height: auto;
+        padding: 40px 14px;
+    }
+
+    .task-create-card {
+        padding: 30px 20px;
+    }
+
+    .task-create-header h1 {
+        font-size: 28px;
+    }
+
+    .task-form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .task-create-actions {
+        flex-direction: column-reverse;
+    }
+
+    .task-create-actions .button {
+        width: 100%;
+    }
+
+    .task-create-page .field-meta {
+        flex-direction: column;
+        gap: 2px;
+    }
+}

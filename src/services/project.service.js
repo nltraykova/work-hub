@@ -71,6 +71,10 @@ async function getDetails(projectId, userId) {
     };
 }
 
+async function getAllMembers(projectId) {
+    return await projectRepository.getAllMembers(projectId);
+}
+
 async function create(projectData, ownerId) {
     const validationResult = createProjectSchema.safeParse(projectData);
 
@@ -230,6 +234,7 @@ const projectService = {
     getMy,
     getDetails,
     getEditData,
+    getAllMembers,
     create,
     edit,
     remove,

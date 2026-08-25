@@ -50,6 +50,23 @@ async function getById(projectId) {
     return project;
 }
 
+async function getAllMembers(projectId) {
+    return await prisma.projectMember.findMany({
+        where: {
+            projectId,
+        },
+        include: {
+            user: {
+                select: {
+                    id: true,
+                    firstName: true,
+                    lastName: true,
+                }
+            },
+        },
+    });
+}
+
 async function create(data, ownerId) {
     const newProject = await prisma.project.create({
         data: {
@@ -94,6 +111,7 @@ async function remove(projectId, userId) {
 const projectRepository = {
     getMy,
     getById,
+    getAllMembers,
     create,
     edit,
     remove,

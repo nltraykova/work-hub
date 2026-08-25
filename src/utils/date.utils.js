@@ -25,3 +25,21 @@ export function isToday(date = new Date()) {
         date.getDate() === today.getDate()
     );
 }
+
+export function isGreaterOrEqualOfToday(date) {
+    const today = new Date();
+
+    const todayOnly = new Date(
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDate(),
+    );
+
+    const dateOnly = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate(),
+    );
+
+    return dateOnly >= todayOnly;
+}

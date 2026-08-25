@@ -24,10 +24,21 @@ async function getById(id) {
     return user;
 }
 
+async function getAll(projectId) {
+    return await prisma.user.findMany({
+        select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+        }
+    });
+}
+
 const userRepository = {
     create,
     getByEmail,
     getById,
+    getAll,
 };
 
 export default userRepository;
