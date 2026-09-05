@@ -1,9 +1,17 @@
 import { prisma } from "../lib/prisma.js";
 
-async function getAllTasksByProject(projectId) {
+async function getAllProjectTasks(projectId) {
     return await prisma.task.findMany({
         where: {
             projectId
+        },
+        include: {
+            assignee: {
+                select: {
+                    firstName: true,
+                    lastName: true,
+                }
+            }
         }
     });
 }
@@ -13,7 +21,7 @@ async function create(data, projectId, userId) {
         data: {
             ...data,
             projectId,
-            creatorId: userId
+            creatorId: userId,
         },
     });
 
@@ -21,7 +29,7 @@ async function create(data, projectId, userId) {
 };
 
 const taskRepository = {
-    getAllTasksByProject,
+    getAllProjectTasks,
     create,
 };
 

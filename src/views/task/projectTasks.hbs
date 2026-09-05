@@ -1,0 +1,124 @@
+{{setTitle 'Project Tasks | WorkHub'}}
+
+<main class="tasks-page">
+    <section class="tasks-section">
+        <div class="container">
+
+            <div class="tasks-topbar">
+                <a href="/projects/{{data.project.id}}" class="back-link">
+                    ← Back to Project
+                </a>
+
+                <a href="/projects/{{data.project.id}}/tasks/create" class="button button-primary">
+                    + New Task
+                </a>
+            </div>
+
+            <div class="tasks-header">
+                <div>
+                    <p class="section-label">Project Tasks</p>
+                    <h1>{{data.project.name}}</h1>
+                    <p class="tasks-subtitle">
+                        View and manage all tasks in this project.
+                    </p>
+                </div>
+            </div>
+
+            <div class="tasks-summary">
+                <article class="task-summary-card">
+                    <span>All Tasks</span>
+                    <strong>{{data.projectTasksCount}}</strong>
+                </article>
+
+                <article class="task-summary-card">
+                    <span>To Do</span>
+                    <strong>{{data.projectTasksToDoCount}}</strong>
+                </article>
+
+                <article class="task-summary-card">
+                    <span>In Progress</span>
+                    <strong>{{data.projectTasksInProgressCount}}</strong>
+                </article>
+
+                <article class="task-summary-card">
+                    <span>Completed</span>
+                    <strong>{{data.projectTasksCompletedCount}}</strong>
+                </article>
+            </div>
+
+            <div class="tasks-toolbar">
+                <div class="tasks-filter">
+                    <button type="button" class="task-filter-button active">
+                        All
+                    </button>
+
+                    <button type="button" class="task-filter-button">
+                        To Do
+                    </button>
+
+                    <button type="button" class="task-filter-button">
+                        In Progress
+                    </button>
+
+                    <button type="button" class="task-filter-button">
+                        Completed
+                    </button>
+                </div>
+            </div>
+
+            <div class="tasks-list">
+                {{#each data.projectTasks}}
+
+                <article class="task-card">
+                    <div class="task-card-main">
+                        <div class="task-card-heading">
+                            <span class="task-status-dot task-dot-progress"></span>
+
+                            <div>
+                                <h2>{{title}}</h2>
+                                <p>{{description}}</p>
+                            </div>
+                        </div>
+
+                        <div class="task-card-meta">
+                            <span class="task-status-label status-in-progress">
+                                {{status}}
+                            </span>
+
+                            <span class="task-priority priority-high">
+                                {{priority}}
+                            </span>
+
+                            <span class="task-due-date">
+                                {{#if dueDate}} Due {{dueDate}} {{else}} No Due Date {{/if}}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="task-card-side">
+                        <div class="task-assignee-info">
+                            <span class="member-avatar">{{assigneeAvatar}}</span>
+
+                            <div>
+                                <small>Assigned to</small>
+                                <strong>{{#if assignee}} {{assignee.firstName}} {{assignee.lastName}} {{else}} No Assignee {{/if}}</strong>
+                            </div>
+                        </div>
+
+                        <a href="/projects/example-project-id/tasks/example-task-id" class="task-open-link">
+                            View Task →
+                        </a>
+                    </div>
+                </article>
+
+                {{else}}
+
+                <p>No tasks yet</p>
+
+                {{/each}}
+
+            </div>
+
+        </div>
+    </section>
+</main>

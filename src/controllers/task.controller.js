@@ -5,6 +5,27 @@ import projectService from "../services/project.service.js";
 
 const taskController = Router({ mergeParams: true });
 
+taskController.get('/', isAuth, async (req, res) => {
+    const projectId = req.params.projectId;
+    const userId = req.user.id;
+
+    const result = await taskService.getAllProjectTasks(projectId, userId);
+
+    if(!result.success) {
+        if(result.type === 'notFound') {
+            return res.status(404).render('404');
+        };
+
+        if(result.type === 'forbidden') {
+            return res.status(404).render('403');
+        };
+    };
+
+    const data = result.data;
+    
+    res.render('task/projectTasks', { data });
+});
+
 taskController.get('/create', isAuth, async (req, res) => {
     const projectId = req.params.projectId;
 

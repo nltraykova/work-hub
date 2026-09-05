@@ -1,7 +1,7 @@
 import projectRepository from "../repositories/project.repository.js";
 import taskRepository from "../repositories/task.repository.js";
 import { createProjectSchema, editProjectSchema } from "../schemas/project.schema.js";
-import { formatDate, formatLastUpdated } from "../utils/date.utils.js";
+import { formatDateLong, formatLastUpdated } from "../utils/date.utils.js";
 import { makeAvatar } from "../utils/other.utils.js";
 
 async function getMy(userId) {
@@ -205,19 +205,19 @@ async function buildDetails(project, currentMember, userId) {
     const lastThreeTasks = project.tasks.map(task => {
         return {
             ...task,
-            dueDate: task.dueDate ? formatDate(task.dueDate) : 'No Due Date',
+            dueDate: task.dueDate ? formatDateLong(task.dueDate) : 'No Due Date',
             assigneeAvatar: task.assignee ? makeAvatar(task.assignee?.firstName, task.assignee?.lastName) : '',
         }
     });
 
-    const allTasks = await taskRepository.getAllTasksByProject(project.id);
+    const allTasks = await taskRepository.getAllProjectTasks(project.id);
     
     const tasksCount = allTasks.length;
 
-    const completedTasksCount = project.tasks.filter(
+    const completedTasksCount = allTasks.filter(
         task => task.status === 'COMPLETED'
     ).length;
-    const inProgressTasksCount = project.tasks.filter(
+    const inProgressTasksCount = allTasks.filter(
         task => task.status === 'IN_PROGRESS'
     ).length;
 
@@ -225,7 +225,7 @@ async function buildDetails(project, currentMember, userId) {
         ? Math.round((completedTasksCount / tasksCount) * 100)
         : 0;
 
-    const createdAt = formatDate(project.createdAt);
+    const createdAt = formatDateLong(project.createdAt);
 
     const updatedAt = formatLastUpdated(project.updatedAt);
 
