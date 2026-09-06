@@ -1,0 +1,220 @@
+{{setTitle 'Task Details | WorkHub'}}
+
+<main class="task-details-page">
+    <section class="task-details-section">
+        <div class="container">
+
+            <div class="task-details-topbar">
+                <a href="/projects/{{data.project.id}}/tasks" class="back-link">
+                    ← Back to Tasks
+                </a>
+
+                <div class="task-details-actions">
+                    <a
+                        href="/projects/{{data.project.id}}/tasks/{{data.id}}/edit"
+                        class="button button-secondary"
+                    >
+                        Edit Task
+                    </a>
+
+                    <form
+                        method="POST"
+                        action="/projects/{{data.project.id}}/tasks/{{data.id}}/delete"
+                    >
+                        <button
+                            type="submit"
+                            class="button button-danger"
+                        >
+                            Delete Task
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="task-details-header">
+                <div class="task-details-title-area">
+                    <div class="task-details-meta">
+                        <span class="task-status-label status-in-progress">{{data.status}}</span>
+
+                        <span class="task-priority priority-high">{{data.priority}}</span>
+                    </div>
+
+                    <h1>{{data.title}}</h1>
+                </div>
+            </div>
+
+            <div class="task-details-layout">
+
+                <section class="task-details-main">
+
+                    <div class="task-details-block">
+                        <h2>Description</h2>
+
+                        <p>{{data.description}}</p>
+                    </div>
+
+                    <div class="task-details-block">
+                        <h2>Activity</h2>
+
+                        <div class="task-activity-list">
+
+                            <div class="task-activity-item">
+                                <span class="member-avatar">NT</span>
+
+                                <div>
+                                    <p>
+                                        <strong>{{data.creator.firstName}} {{data.creator.lastName}}</strong>
+                                        created this task.
+                                    </p>
+
+                                    <span>August 28, 2026 at 10:42 AM</span>
+                                </div>
+                            </div>
+
+                            <div class="task-activity-item">
+                                <span class="member-avatar">PS</span>
+
+                                <div>
+                                    <p>
+                                        <strong>Peter Smith</strong>
+                                        changed the status to
+                                        <strong>In Progress</strong>.
+                                    </p>
+
+                                    <span>August 29, 2026 at 2:15 PM</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="task-details-block">
+                        <div class="task-comments-header">
+                            <h2>Comments</h2>
+
+                            <span>{{data.commentsCount}} comments</span>
+                        </div>
+
+                        <div class="task-comments-list">
+                            {{#each data.comments}}
+                            <article class="task-comment">
+                                <span class="member-avatar">{{creatorAvatar}}</span>
+
+                                <div class="task-comment-content">
+                                    <div class="task-comment-header">
+                                        <strong>{{author.firstName}} {{author.lastName}}</strong>
+                                        <span>{{createdAt}}</span>
+                                    </div>
+
+                                    <p>{{content}}</p>
+                                </div>
+                            </article>
+
+                            {{else}}
+
+                            No comments yet
+
+                            {{/each}}
+
+                        </div>
+
+                        <form method="POST" class="task-comment-form">
+                            <label for="comment">Add comment</label>
+
+                            <textarea
+                                id="comment"
+                                name="content"
+                                rows="4"
+                                placeholder="Write a comment..."
+                            ></textarea>
+
+                            <div class="task-comment-actions">
+                                <button
+                                    type="submit"
+                                    class="button button-primary"
+                                >
+                                    Add Comment
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                </section>
+
+                <aside class="task-details-sidebar">
+
+                    <section class="task-sidebar-card">
+                        <h2>Task Information</h2>
+
+                        <dl class="task-info-list">
+                            <div>
+                                <dt>Status</dt>
+                                <dd>{{data.status}}</dd>
+                            </div>
+
+                            <div>
+                                <dt>Priority</dt>
+                                <dd>{{data.priority}}</dd>
+                            </div>
+
+                            <div>
+                                <dt>Due date</dt>
+                                <dd>{{data.dueDate}}</dd>
+                            </div>
+
+                            <div>
+                                <dt>Created</dt>
+                                <dd>{{data.createdAt}}</dd>
+                            </div>
+
+                            <div>
+                                <dt>Last updated</dt>
+                                <dd>{{data.lastUpdated}}</dd>
+                            </div>
+                        </dl>
+                    </section>
+
+                    <section class="task-sidebar-card">
+                        <h2>Assignee</h2>
+
+                        <div class="task-person">
+                            <span class="member-avatar">{{data.assigneeAvatar}}</span>
+
+                            <div>
+                                <strong>{{#if data.assignee}} {{data.assignee.firstName}} {{data.assignee.lastName}} {{else}} No assignee {{/if}}</strong>
+                                <span>{{data.assignee.email}}</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="task-sidebar-card">
+                        <h2>Created by</h2>
+
+                        <div class="task-person">
+                            <span class="member-avatar">{{data.creatorAvatar}}</span>
+
+                            <div>
+                                <strong>{{data.creator.firstName}} {{data.creator.lastName}}</strong>
+                                <span>{{data.creator.email}}</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="task-sidebar-card">
+                        <h2>Project</h2>
+
+                        <a
+                            href="/projects/{{data.project.id}}"
+                            class="task-project-link"
+                        >
+                            {{data.project.name}} →
+                        </a>
+                    </section>
+
+                </aside>
+
+            </div>
+
+        </div>
+    </section>
+</main>

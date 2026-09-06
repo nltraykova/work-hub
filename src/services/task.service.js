@@ -1,7 +1,7 @@
 import projectRepository from "../repositories/project.repository.js";
 import taskRepository from "../repositories/task.repository.js";
 import { createTaskSchema } from "../schemas/task.schema.js";
-import { isGreaterThanOrEqualToToday, formatDateShort } from "../utils/date.utils.js";
+import { isGreaterThanOrEqualToToday, formatDateShort, formatDateLong, isToday } from "../utils/date.utils.js";
 import { makeAvatar } from "../utils/other.utils.js";
 
 async function getAllProjectTasks(projectId, userId) {
@@ -57,6 +57,60 @@ async function getAllProjectTasks(projectId, userId) {
     };
 }
 
+async function getById(projectId, taskId, userId) {
+    const project = await projectRepository.getById(projectId);
+
+    if (!project) {
+        return {
+            success: false,
+            type: 'notFound',
+            error: 'Project not found',
+        };
+    };
+
+    const currentMember = project.members.find(member => member.userId === userId);
+
+    if (!currentMember) {
+        return {
+            success: false,
+            type: 'forbidden',
+            error: 'You do not have access to this task'
+        };
+    };
+
+    const task = await taskRepository.getById(taskId);
+
+    if (!task) {
+        return {
+            success: false,
+            type: 'notFound',
+            error: 'Task not found',
+        };
+    };
+
+    const result = {
+        ...task,
+        dueDate: task.dueDate ? formatDateLong(task.dueDate) : undefined,
+        createdAt: formatDateLong(task.createdAt),
+        lastUpdated: isToday(task.updatedAt) ? 'Today' : formatDateLong(task.updatedAt),
+        assigneeAvatar: task.assignee ? makeAvatar(task.assignee.firstName, task.assignee.lastName) : undefined,
+        creatorAvatar: makeAvatar(task.creator.firstName, task.creator.lastName),
+        commentsCount: task.comments.length,
+        comments: task.comments.map(comment => {
+            return {
+                ...comment,
+                createdAt: formatDateShort(comment.createdAt),
+                creatorAvatar: makeAvatar(comment.author.firstName, comment.author.lastName),
+            }
+        }),
+    };
+
+    return {
+        success: true,
+        data: result,
+    };
+}
+
 async function create(taskData, projectId, userId) {
     const project = await projectRepository.getById(projectId);
 
@@ -108,6 +162,7 @@ async function create(taskData, projectId, userId) {
 
 const taskService = {
     getAllProjectTasks,
+    getById,
     create,
 };
 

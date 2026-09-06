@@ -26,6 +26,28 @@ taskController.get('/', isAuth, async (req, res) => {
     res.render('task/projectTasks', { data });
 });
 
+taskController.get('/:taskId', isAuth, async (req, res) => {
+    const projectId = req.params.projectId;
+    const taskId = req.params.taskId;
+    const userId = req.user.id;
+
+    const result = await taskService.getById(projectId, taskId, userId);
+
+    if(!result.success) {
+        if(result.type === 'notFound') {
+            return res.status(404).render('404');
+        };
+
+        if(result.type === 'forbidden') {
+            return res.status(404).render('403');
+        };
+    };
+
+    const data = result.data;
+
+    res.render('task/details', { data });
+});
+
 taskController.get('/create', isAuth, async (req, res) => {
     const projectId = req.params.projectId;
 
