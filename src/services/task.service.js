@@ -57,7 +57,7 @@ async function getAllProjectTasks(projectId, userId) {
     };
 }
 
-async function getById(projectId, taskId, userId) {
+async function getDetails(projectId, taskId, userId) {
     const project = await projectRepository.getById(projectId);
 
     if (!project) {
@@ -74,7 +74,7 @@ async function getById(projectId, taskId, userId) {
         return {
             success: false,
             type: 'forbidden',
-            error: 'You do not have access to this task'
+            error: 'You do not have access to this task',
         };
     };
 
@@ -108,6 +108,43 @@ async function getById(projectId, taskId, userId) {
     return {
         success: true,
         data: result,
+    };
+}
+
+async function getById(projectId, taskId, userId) {
+    const project = await projectRepository.getById(projectId);
+    
+    if (!project) {
+        return {
+            success: false,
+            type: 'notFound',
+            error: 'Project not found',
+        };
+    };
+
+    const currentMember = project.members.find(member => member.userId === userId);
+
+    if (!currentMember) {
+        return {
+            success: false,
+            type: 'forbidden',
+            error: 'You do not have access to this task',
+        };
+    };
+
+    const task = await taskRepository.getById(taskId);
+
+    if (!task) {
+        return {
+            success: false,
+            type: 'notFound',
+            error: 'Task not found',
+        };
+    };
+
+    return {
+        success: true,
+        data: task,
     };
 }
 
@@ -162,6 +199,7 @@ async function create(taskData, projectId, userId) {
 
 const taskService = {
     getAllProjectTasks,
+    getDetails,
     getById,
     create,
 };

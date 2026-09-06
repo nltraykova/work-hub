@@ -1,0 +1,137 @@
+{{setTitle 'Edit Task | WorkHub'}}
+
+<main class="task-edit-page">
+    <section class="task-edit-card">
+        <div class="task-edit-header">
+            <p class="section-label">Task management</p>
+
+            <h1>Edit task</h1>
+
+            <p>
+                Update the task details, status, priority, assignee, and due date.
+            </p>
+        </div>
+
+        <form method="POST" class="task-edit-form">
+            <div class="form-group">
+                <label for="title">Task title</label>
+
+                <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    value="{{data.title}}"
+                    maxlength="120"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+
+                <textarea
+                    id="description"
+                    name="description"
+                    maxlength="1000"
+                    rows="6"
+                >{{data.description}}</textarea>
+
+                <div class="field-meta">
+                    <span>Optional</span>
+                    <span>Maximum 1000 characters</span>
+                </div>
+            </div>
+
+            <div class="task-edit-row">
+                <div class="form-group">
+                    <label for="status">Status</label>
+
+                    <select id="status" name="status">
+                        {{#each statusOptions}}
+                        <option value="{{value}}" {{#if selected}}selected{{/if}}>{{name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="priority">Priority</label>
+
+                    <select id="priority" name="priority">
+                        {{#each priorityOptions}}
+                        <option value="{{value}}" {{#if selected}}selected{{/if}}>{{name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+            </div>
+
+            <div class="task-edit-row">
+                <div class="form-group">
+                    <label for="assigneeId">Assignee</label>
+
+                    <select id="assigneeId" name="assigneeId">
+                        <option value="" {{#if unassignedSelected}}selected{{/if}}>Unassigned</option>
+                        {{#each assigneeOptions}}
+                        <option value="{{value}}" {{#if selected}}selected{{/if}}>{{name}}</option>
+                        {{/each}}
+                    </select>
+
+                    <div class="field-meta">
+                        <span>Optional</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="dueDate">Due date</label>
+
+                    <input
+                        type="date"
+                        id="dueDate"
+                        name="dueDate"
+                        value="{{data.dueDate}}"
+                    >
+
+                    <div class="field-meta">
+                        <span>Optional</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="task-edit-actions">
+                <a
+                    href="/projects/{{data.project.id}}/tasks/{{data.id}}"
+                    class="button button-secondary"
+                >
+                    Cancel
+                </a>
+
+                <button
+                    type="submit"
+                    class="button button-primary edit-task-submit"
+                >
+                    Save Changes
+                </button>
+            </div>
+        </form>
+
+        <div class="task-danger-zone">
+            <div>
+                <h2>Danger zone</h2>
+
+                <p>
+                    Deleting this task will also remove all comments associated with it.
+                </p>
+            </div>
+
+            <form
+                method="POST"
+                action="/projects/{{data.project.id}}/tasks/{{data.id}}/delete"
+            >
+                <button
+                    type="submit"
+                    class="button button-danger"
+                >
+                    Delete Task
+                </button>
+            </form>
+        </div>
+    </section>
+</main>

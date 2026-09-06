@@ -37,6 +37,7 @@ async function getById(taskId) {
             },
             assignee: {
                 select: {
+                    id: true,
                     firstName: true,
                     lastName: true,
                     email: true,
