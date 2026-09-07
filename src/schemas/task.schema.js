@@ -19,9 +19,9 @@ export const createTaskSchema = z.object({
     ),
     assigneeId: z.string()
         .trim()
-        .transform(value => value || undefined)
+        .transform(value => value || null)
         .optional(),
     dueDate: z.string()
-        .transform(value => value ? new Date(value) : undefined)
+        .transform(value => value ? new Date(value) : null)
         .optional(),
 });

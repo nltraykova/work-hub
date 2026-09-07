@@ -112,17 +112,59 @@ taskController.get('/:taskId/edit', isAuth, async (req, res) => {
     res.render('task/edit', { data, priorityOptions, statusOptions, assigneeOptions, unassignedSelected });
 });
 
+taskController.post('/:taskId/edit', isAuth, async (req, res) => {
+    const projectId = req.params.projectId;
+    const taskId = req.params.taskId;
+    const userId = req.user.id;
+    const taskData = req.body;
+
+    const result = await taskService.edit(projectId, taskId, userId, taskData);
+
+    if (!result.success) {
+        if (result.type === 'validation') {
+            const priorityOptions = getPriorityOptions(taskData.priority);
+            const statusOptions = getStatusOptions(taskData.status);
+            const members = await projectService.getAllMembers(projectId);
+            const assigneeOptions = getAssigneeOptions(members, taskData.assigneeId);
+            const unassignedSelected = !taskData.assigneeId;
+
+            return res.status(400).render('task/edit', {
+                errors: result.errors,
+                data: { ...req.body, projectId, id: taskId },
+                priorityOptions,
+                statusOptions,
+                assigneeOptions,
+                unassignedSelected,
+            });
+        };
+
+        if (result.type === 'notFound') {
+            return res.status(404).render('404')
+        };
+
+        if (result.type === 'forbidden') {
+            return res.status(403).render('403');
+        };
+    };
+
+    res.redirect(`/projects/${projectId}/tasks/${taskId}`);
+});
+
 //helpers
 function getStatusOptions(taskStatus) {
-    const statuses = ['TODO', 'IN_PROGRESS', 'COMPLETED'];
+    const statuses = {
+        'TODO': 'To Do',
+        'IN_PROGRESS': 'In Progress',
+        'COMPLETED': 'Completed',
+    };
 
-    const options = statuses.map(status => {
+    const options = Object.entries(statuses).map(([value, name]) => {
         return {
-            name: status,
-            value: status,
-            selected: taskStatus === status,
+            name,
+            value,
+            selected: taskStatus === value,
         };
-    });
+    })
 
     return options;
 }
@@ -145,7 +187,7 @@ function getAssigneeOptions(members, taskAssigneeId) {
     const options = members.map(member => {
         return {
             name: `${member.user.firstName} ${member.user.lastName}`,
-            value:  member.user.id,
+            value: member.user.id,
             selected: taskAssigneeId === member.user.id,
         };
     });

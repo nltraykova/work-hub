@@ -12,28 +12,29 @@
             </p>
         </div>
 
+        {{#if error}}
+        <div class="alert alert-error" role="alert">
+            {{error}}
+        </div>
+        {{/if}}
+
         <form method="POST" class="task-edit-form">
             <div class="form-group">
                 <label for="title">Task title</label>
 
-                <input
-                    type="text"
-                    id="title"
-                    name="title"
-                    value="{{data.title}}"
-                    maxlength="120"
-                >
+                <input type="text" id="title" name="title" value="{{data.title}}" maxlength="120">
+                {{#if errors.title}}
+                <p class="field-error">{{errors.title}}</p>
+                {{/if}}
             </div>
 
             <div class="form-group">
                 <label for="description">Description</label>
 
-                <textarea
-                    id="description"
-                    name="description"
-                    maxlength="1000"
-                    rows="6"
-                >{{data.description}}</textarea>
+                <textarea id="description" name="description" maxlength="1000" rows="6">{{data.description}}</textarea>
+                {{#if errors.description}}
+                <p class="field-error">{{errors.description}}</p>
+                {{/if}}
 
                 <div class="field-meta">
                     <span>Optional</span>
@@ -50,6 +51,9 @@
                         <option value="{{value}}" {{#if selected}}selected{{/if}}>{{name}}</option>
                         {{/each}}
                     </select>
+                    {{#if errors.status}}
+                    <p class="field-error">{{errors.status}}</p>
+                    {{/if}}
                 </div>
 
                 <div class="form-group">
@@ -60,6 +64,9 @@
                         <option value="{{value}}" {{#if selected}}selected{{/if}}>{{name}}</option>
                         {{/each}}
                     </select>
+                    {{#if errors.priority}}
+                    <p class="field-error">{{errors.priority}}</p>
+                    {{/if}}
                 </div>
             </div>
 
@@ -73,6 +80,9 @@
                         <option value="{{value}}" {{#if selected}}selected{{/if}}>{{name}}</option>
                         {{/each}}
                     </select>
+                    {{#if errors.assigneeId}}
+                    <p class="field-error">{{errors.assigneeId}}</p>
+                    {{/if}}
 
                     <div class="field-meta">
                         <span>Optional</span>
@@ -82,12 +92,10 @@
                 <div class="form-group">
                     <label for="dueDate">Due date</label>
 
-                    <input
-                        type="date"
-                        id="dueDate"
-                        name="dueDate"
-                        value="{{data.dueDate}}"
-                    >
+                    <input type="date" id="dueDate" name="dueDate" value="{{data.dueDate}}">
+                    {{#if errors.dueDate}}
+                    <p class="field-error">{{errors.dueDate}}</p>
+                    {{/if}}
 
                     <div class="field-meta">
                         <span>Optional</span>
@@ -96,17 +104,11 @@
             </div>
 
             <div class="task-edit-actions">
-                <a
-                    href="/projects/{{data.project.id}}/tasks/{{data.id}}"
-                    class="button button-secondary"
-                >
+                <a href="/projects/{{data.projectId}}/tasks/{{data.id}}" class="button button-secondary">
                     Cancel
                 </a>
 
-                <button
-                    type="submit"
-                    class="button button-primary edit-task-submit"
-                >
+                <button type="submit" class="button button-primary edit-task-submit">
                     Save Changes
                 </button>
             </div>
@@ -121,14 +123,8 @@
                 </p>
             </div>
 
-            <form
-                method="POST"
-                action="/projects/{{data.project.id}}/tasks/{{data.id}}/delete"
-            >
-                <button
-                    type="submit"
-                    class="button button-danger"
-                >
+            <form method="POST" action="/projects/{{data.projectId}}/tasks/{{data.id}}/delete">
+                <button type="submit" class="button button-danger">
                     Delete Task
                 </button>
             </form>

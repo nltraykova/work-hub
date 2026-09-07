@@ -26,6 +26,14 @@ export function formatLastUpdated(date) {
     return formatDateLong(date);
 }
 
+export function formatDateForInput(date) {
+    if (!date) {
+        return '';
+    };
+
+    return date.toISOString().split('T')[0];
+}
+
 export function isToday(date = new Date()) {
     const today = new Date();
 

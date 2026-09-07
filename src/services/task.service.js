@@ -1,7 +1,7 @@
 import projectRepository from "../repositories/project.repository.js";
 import taskRepository from "../repositories/task.repository.js";
 import { createTaskSchema } from "../schemas/task.schema.js";
-import { isGreaterThanOrEqualToToday, formatDateShort, formatDateLong, isToday } from "../utils/date.utils.js";
+import { isGreaterThanOrEqualToToday, formatDateShort, formatDateLong, isToday, formatDateForInput } from "../utils/date.utils.js";
 import { makeAvatar } from "../utils/other.utils.js";
 
 async function getAllProjectTasks(projectId, userId) {
@@ -32,7 +32,7 @@ async function getAllProjectTasks(projectId, userId) {
             assigneeAvatar: task.assignee ? makeAvatar(task.assignee.firstName, task.assignee.lastName) : undefined,
         }
     });
-    
+
     const projectTasksCount = projectTasks.length;
     const projectTasksToDoCount = projectTasks.filter(
         task => task.status === 'TODO'
@@ -78,7 +78,7 @@ async function getDetails(projectId, taskId, userId) {
         };
     };
 
-    const task = await taskRepository.getById(taskId);
+    const task = await taskRepository.getById(projectId, taskId);
 
     if (!task) {
         return {
@@ -113,7 +113,7 @@ async function getDetails(projectId, taskId, userId) {
 
 async function getById(projectId, taskId, userId) {
     const project = await projectRepository.getById(projectId);
-    
+
     if (!project) {
         return {
             success: false,
@@ -132,7 +132,7 @@ async function getById(projectId, taskId, userId) {
         };
     };
 
-    const task = await taskRepository.getById(taskId);
+    const task = await taskRepository.getById(projectId, taskId);
 
     if (!task) {
         return {
@@ -144,7 +144,10 @@ async function getById(projectId, taskId, userId) {
 
     return {
         success: true,
-        data: task,
+        data: {
+            ...task,
+            dueDate: formatDateForInput(task.dueDate),
+        },
     };
 }
 
@@ -156,7 +159,7 @@ async function create(taskData, projectId, userId) {
             success: false,
             type: 'notFound',
             error: 'Project not found',
-        }
+        };
     };
 
     const member = project.members.find(member => member.userId === userId);
@@ -197,11 +200,78 @@ async function create(taskData, projectId, userId) {
     };
 }
 
+async function edit(projectId, taskId, userId, taskData) {
+    const project = await projectRepository.getById(projectId);
+
+    if (!project) {
+        return {
+            success: false,
+            type: 'notFound',
+            error: 'Project not found',
+        }
+    };
+
+    const task = await taskRepository.getById(projectId, taskId);
+
+    if (!task) {
+        return {
+            success: false,
+            type: 'notFound',
+            error: 'Task not found'
+        };
+    };
+
+    const member = project.members.find(
+        member => member.userId === userId
+    );
+
+    if (!member) {
+        return {
+            success: false,
+            type: 'forbidden',
+            error: 'You do not have permission to edit task to this project'
+        };
+    };
+
+    const validationResult = createTaskSchema.safeParse(taskData);
+
+    if (!validationResult.success) {
+        return {
+            success: false,
+            type: 'validation',
+            errors: validationResult.error.flatten().fieldErrors,
+        };
+    };
+
+    const data = validationResult.data;
+
+    const selectedAssigneeMember = project.members.find(
+        member => member.userId === data.assigneeId
+    );
+
+    if (taskData.assigneeId && !selectedAssigneeMember) {
+        return {
+            success: false,
+            type: 'validation',
+            errors: {
+                assigneeId: ['The assignee must be a member of the project']
+            }
+        };
+    };
+
+    await taskRepository.edit(data, projectId, taskId);
+
+    return {
+        success: true,
+    };
+}
+
 const taskService = {
     getAllProjectTasks,
     getDetails,
     getById,
     create,
+    edit,
 };
 
 export default taskService;

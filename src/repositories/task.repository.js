@@ -23,10 +23,11 @@ async function getAllProjectTasks(projectId) {
     return projectTasks;
 }
 
-async function getById(taskId) {
-    const task = await prisma.task.findUnique({
+async function getById(projectId, taskId) {
+    const task = await prisma.task.findFirst({
         where: {
             id: taskId,
+            projectId,
         },
         include: {
             project: {
@@ -80,10 +81,23 @@ async function create(data, projectId, userId) {
     return newTask;
 };
 
+async function edit(data, projectId, taskId) {
+    await prisma.task.update({
+        where: {
+            id: taskId,
+            projectId
+        },
+        data: {
+            ...data,
+        },
+    });
+}
+
 const taskRepository = {
     getAllProjectTasks,
     getById,
     create,
+    edit,
 };
 
 export default taskRepository;
